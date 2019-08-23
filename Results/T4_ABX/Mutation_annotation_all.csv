@@ -1,0 +1,35 @@
+,AG,CTRL,CTRL.2,CTRL.3,CTRL.4,Category1,EXPT,EXPT.2,EXPT.3,EXPT.4,Experiment,From,Gene.Description,Gene.Name,Location.Tag,LocusTag,No..of.Categories,Position,Tag1,To,Type,Type.CTRL,Unnamed: 0
+0,1.0,0.0,0.0,0.0,0.0,Capsule metabolism,19.451189000000003,0.0,91.9109344,5.19490242,T4_CIP,C,capsular polysaccharide biosynthesis protein Cps4J,cps4J,Capsule,SP_0358,1.0,333004.0,METABOLISM,T,SNP,0.0,898.0
+1,1.0,0.0,0.0,0.0,0.0,Replication,100.0,100.0,92.872715,100.0,T4_CIP,C,"DNA topoisomerase IV, A subunit, Gram-positive",parC,Intracellular,SP_0855,1.0,800935.0,GENETIC INFORMATION PROCESSING,A,SNP,0.0,911.0
+2,1.0,0.0,0.0,0.0,0.0,Replication,93.1510925,0.0,92.7461147,66.08872410000001,T4_CIP,G,"DNA gyrase, subunit A",GyrA,Intracellular,SP_1219,1.0,1149617.0,GENETIC INFORMATION PROCESSING,T,SNP,0.0,913.0
+3,1.0,0.0,0.0,0.0,0.0,Replication,0.0,100.0,0.0,0.0,T4_CIP,G,"DNA gyrase, subunit A",GyrA,Intracellular,SP_1219,1.0,1149617.0,GENETIC INFORMATION PROCESSING,A,SNP,0.0,1060.0
+4,1.0,0.0,0.0,0.0,0.0,Cell wall metabolism,77.1660328,100.0,10.0793362,100.0,T4_CIP,G,UDP-N-acetylmuramoyl-L-alanyl-D-glutamate--L-lysine ligase,MurE,Cell Wall,SP_1530,1.0,1442712.0,METABOLISM,T,SNP,0.0,916.0
+5,1.0,0.0,0.0,0.0,0.0,Translation,0.0,86.0340595,0.0,0.0,T4_CIP,C,translation initiation factor IF-1,infA,Intracellular,SP_0232,1.0,205368.0,GENETIC INFORMATION PROCESSING,T,SNP,0.0,1053.0
+6,1.0,0.0,0.0,0.0,0.0,Translation,0.0,0.0,5.4416179699999985,75.9104729,T4_CIP,T,Glycine--tRNA ligase beta subunit,GlyS,Intracellular,SP_1474,1.0,1387561.0,GENETIC INFORMATION PROCESSING,C,SNP,0.0,1129.0
+7,1.0,0.0,0.0,0.0,0.0,Cell division,0.0,0.0,86.31496429999999,0.0,T4_CIP,C,YlmE Protein,YlmE,,SP_1665,1.0,1565034.0,CELLULAR PROCESSES,T,SNP,0.0,1130.0
+8,1.0,0.0,0.0,0.0,0.0,,0.0,0.0,5.37867901,77.2280526,T4_CIP,A,,,,,,1984846.0,,13,DEL,0.0,1155.0
+0,1.0,0.0,0.0,0.0,0.0,Translation,71.263361,33.2222462,0.0,0.0,T4_KAN,G,elongation factor G,fusA,Intracellular,SP_0273,1.0,250405.0,GENETIC INFORMATION PROCESSING,T,SNP,0.0,910.0
+1,1.0,0.0,0.0,0.0,0.0,Capsule metabolism,78.52516170000001,89.118576,76.0473728,0.0,T4_KAN,C,capsular polysaccharide biosynthesis protein Cps4J,cps4J,Capsule,SP_0358,1.0,333004.0,METABOLISM,T,SNP,0.0,914.0
+2,1.0,0.0,0.0,0.0,0.0,,63.1690979,29.1815281,0.0,0.0,T4_KAN,C,,,,,,1644896.0,,A,SNP,0.0,963.0
+3,1.0,0.0,0.0,0.0,0.0,Energy metabolism,0.0,39.5062447,84.34200290000001,74.39570429999999,T4_KAN,C,"ATP synthase F1, beta subunit",AtpD,Intracellular,SP_1508,1.0,1416957.0,METABOLISM,T,SNP,0.0,1069.0
+4,1.0,0.0,0.0,0.0,0.0,Membrane transport,0.0,43.6429024,79.4802189,0.0,T4_KAN,C,Oligopeptide transport ATP-binding protein AmiE,amiE,Membrane,SP_1888,1.0,1792963.0,ENVIRONMENTAL INFORMATION PROCESSING,A,SNP,0.0,1115.0
+5,1.0,0.0,0.0,0.0,0.0,Membrane transport,0.0,32.9409122,78.048563,0.0,T4_KAN,C,sugar ABC transporter substrate-binding protein,rafE,Membrane,SP_1897,2.0,1804233.0,ENVIRONMENTAL INFORMATION PROCESSING,1,DEL,0.0,1116.0
+6,1.0,0.0,0.0,0.0,0.0,Membrane transport,0.0,33.57462879999999,79.344368,0.0,T4_KAN,T,sugar ABC transporter substrate-binding protein,rafE,Membrane,SP_1897,2.0,1804235.0,ENVIRONMENTAL INFORMATION PROCESSING,G,SNP,0.0,1117.0
+7,1.0,0.0,0.0,0.0,0.0,Membrane transport,0.0,34.0188503,79.08344269999998,0.0,T4_KAN,C,sugar ABC transporter substrate-binding protein,rafE,Membrane,SP_1897,2.0,1804236.0,ENVIRONMENTAL INFORMATION PROCESSING,A,SNP,0.0,1118.0
+8,1.0,0.0,0.0,0.0,0.0,Membrane transport,0.0,32.8644753,78.38687900000001,0.0,T4_KAN,C,sugar ABC transporter substrate-binding protein,rafE,Membrane,SP_1897,2.0,1804237.0,ENVIRONMENTAL INFORMATION PROCESSING,G,SNP,0.0,1119.0
+0,1.0,0.0,0.0,0.0,0.0,Capsule metabolism,100.0,100.0,94.4143772,100.0,T4_LVX,C,capsular polysaccharide biosynthesis protein Cps4J,cps4J,Capsule,SP_0358,1.0,333004.0,METABOLISM,T,SNP,0.0,888.0
+1,1.0,0.0,0.0,0.0,0.0,Replication,100.0,100.0,100.0,100.0,T4_LVX,C,"DNA topoisomerase IV, A subunit, Gram-positive",parC,Intracellular,SP_0855,1.0,800935.0,GENETIC INFORMATION PROCESSING,A,SNP,0.0,891.0
+2,1.0,0.0,0.0,0.0,0.0,Replication,100.0,100.0,100.0,100.0,T4_LVX,G,"DNA gyrase, subunit A",GyrA,Intracellular,SP_1219,1.0,1149617.0,GENETIC INFORMATION PROCESSING,T,SNP,0.0,894.0
+3,1.0,0.0,0.0,0.0,0.0,Structural proteins,0.0,51.0041237,30.141544300000003,0.0,T4_LVX,C,,,Cell Wall,SP_1772,1.0,1683618.0,CELLULAR PROCESSES,T,SNP,0.0,1042.0
+0,1.0,0.0,0.0,0.0,0.0,Cell wall metabolism,100.0,100.0,100.0,100.0,T4_PEN,A,Penicillin-binding protein 2x,,Cell Wall,SP_0336,2.0,308636.0,METABOLISM,C,SNP,0.0,899.0
+1,1.0,0.0,0.0,0.0,0.0,Capsule metabolism,100.0,100.0,100.0,100.0,T4_PEN,C,capsular polysaccharide biosynthesis protein Cps4E,cps4E,Capsule,SP_0350,1.0,324228.0,METABOLISM,T,SNP,0.0,900.0
+2,1.0,0.0,0.0,0.0,0.0,Cell wall metabolism,100.0,100.0,100.0,100.0,T4_PEN,A,Lipopolysaccharide cholinephosphotransferase LicD2 ,LicD2,Membrane,SP_1274,1.0,1207068.0,METABOLISM,1,DEL,0.0,922.0
+3,1.0,0.0,0.0,0.0,0.0,Membrane transport,100.0,100.0,100.0,100.0,T4_PEN,A,"Heterodimeric multi-drug efflux ABC transporter, permease/ATP-binding subunit 1",,Membrane,SP_1358,1.0,1280284.0,ENVIRONMENTAL INFORMATION PROCESSING,G,SNP,0.0,925.0
+4,1.0,0.0,0.0,0.0,0.0,Cell wall metabolism,100.0,100.0,100.0,100.0,T4_PEN,G,UDP-N-acetylmuramoyl-L-alanyl-D-glutamate--L-lysine ligase,MurE,Cell Wall,SP_1530,1.0,1442712.0,METABOLISM,T,SNP,0.0,932.0
+5,1.0,0.0,0.0,0.0,0.0,,100.0,100.0,100.0,100.0,T4_PEN,G,c-di-AMP phosphodiesterase,,,SP_2205,1.0,2125225.0,HYPOTHETICAL/UNKNOWN,T,SNP,0.0,981.0
+0,1.0,0.0,0.0,0.0,0.0,Transcription,100.0,100.0,94.86379620000001,91.9115067,T4_RIF,G,DNA-directed RNA polymerase beta subunit,rpoB,Intracellular,SP_1961,1.0,1868371.0,GENETIC INFORMATION PROCESSING,C,SNP,0.0,1014.0
+1,1.0,0.0,0.0,0.0,0.0,Transcription,100.0,100.0,100.0,100.0,T4_RIF,A,DNA-directed RNA polymerase beta subunit,rpoB,Intracellular,SP_1961,1.0,1868546.0,GENETIC INFORMATION PROCESSING,C,SNP,0.0,1015.0
+0,1.0,0.0,0.0,0.0,0.0,Capsule metabolism,100.0,100.0,100.0,100.0,T4_VNC,C,capsular polysaccharide biosynthesis protein Cps4E,cps4E,Capsule,SP_0350,1.0,324306.0,METABOLISM,T,SNP,0.0,908.0
+1,1.0,0.0,0.0,0.0,0.0,Cell division,100.0,0.0,100.0,0.0,T4_VNC,G,cell division protein FtsW,FtsW,Cell Wall,SP_1067,1.0,1001392.0,CELLULAR PROCESSES,A,SNP,0.0,926.0
+2,1.0,0.0,0.0,0.0,0.0,Cell division,0.0,78.0936718,0.0,29.6881199,T4_VNC,A,cell division protein FtsW,FtsW,Cell Wall,SP_1067,1.0,1001393.0,CELLULAR PROCESSES,G,SNP,0.0,1007.0
+3,1.0,0.0,0.0,0.0,0.0,,0.0,72.5399017,0.0,24.916124300000003,T4_VNC,G,,,,,,1422415.0,,A,SNP,0.0,1008.0
