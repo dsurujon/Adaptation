@@ -7,7 +7,7 @@ PMID: [24838886](https://www.ncbi.nlm.nih.gov/pubmed/24838886)
 
 ## STEP 1: Copy and rename the required files from aerobio output directory to local directory.     
 
-*Note: this step is specific for TvO lab server ```prince```. If you're not working on this server, you will need to assemble your .gd files another way...*     
+*Note: this step is specific for TvO lab server ```prince```. If you're not working on this server, you will need to assemble your .gd files another way. If you ARE working on this server, please navigate to ```/store/data/share/Adaptation``` before running any of these scripts.*     
 
 Running aerobio/breseq produces a directory under ```ExpOut/[ExpID]/``` where ```[ExpID]``` is the aerobio experiment ID (e.g. ```170509_NS500751_0035_AHGTWJBGX2```).     
 Under this directory, the ```Out``` subdirectory contains a separate directory for each sample. And under each sample-specific directory, there exists a machine-readable ```output.gd``` file. This is the file we need to run all downstream analysis. (N.b. The ```summary.html``` file is much more human friendly and readable for a first-pass view of the results). An example of a sample-specific sub-directory (named ```T4VanPopulation4```) is shown below:    
