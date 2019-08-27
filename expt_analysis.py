@@ -7,6 +7,10 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+mpl.style.use('bmh')
+mycolors = mpl.cm.get_cmap("gist_rainbow", 25)
 plt.switch_backend('Agg')
 
 ## Use example 
@@ -87,46 +91,76 @@ def main():
 	
 	# plot the types of mutations (SNP/INS/DEL/SUB)
 	plt.clf()
-	ax = mut_summary[['SNP','INS','DEL','SUB']].iloc[mut_summary.Total.argsort()].plot(kind="bar", stacked=True)
+	ax = mut_summary[['SNP','INS','DEL','SUB']].iloc[mut_summary.Total.argsort()].plot(kind="bar", stacked=True, colormap=mycolors)
 	ax.set_xticklabels(mut_summary[['Experiment']].iloc[mut_summary.Total.argsort(),0])
-	ax.set_ylabel('Count')
+	ax.set_ylabel('Number of Mutations')
 	plt.tight_layout()
 	mut_type_plot_file = os.path.join(outdir, 'Mutation_type.svg')
 	plt.savefig(mut_type_plot_file)
 	
 	# plot the locations of mutations (Coding/noncoding)
 	plt.clf()
-	ax = mut_summary[['Coding','Noncoding']].iloc[mut_summary.Total.argsort()].plot(kind="bar", stacked=True)
+	ax = mut_summary[['Coding','Noncoding']].iloc[mut_summary.Total.argsort()].plot(kind="bar", stacked=True, colormap=mycolors)
 	ax.set_xticklabels(mut_summary[['Experiment']].iloc[mut_summary.Total.argsort(),0])
-	ax.set_ylabel('Count')
+	ax.set_ylabel('Number of Mutations')
 	plt.tight_layout()
 	mut_type_plot_file = os.path.join(outdir, 'Mutation_coding.svg')
 	plt.savefig(mut_type_plot_file)
 	
-	## plot the Tags 
+	## plot the Tags  - counts are MUTATIONS
 	plt.clf()
 	aglist_grouped = mut_annot_all.groupby(
 		by=['Experiment', 'Tag1'],
 		as_index=False
 		).sum()
 	aglist_grouped_wide = aglist_grouped.pivot(index='Experiment', columns='Tag1', values='AG')
-	ax = aglist_grouped_wide.plot(kind="bar", stacked=True)
-	ax.set_ylabel('Count')
+	ax = aglist_grouped_wide.plot(kind="bar", stacked=True, colormap=mycolors)
+	ax.set_ylabel('Number of Mutations')
 	plt.tight_layout()
-	AG_TAG_plot_file = os.path.join(outdir, 'AG_TAG.svg')
+	AG_TAG_plot_file = os.path.join(outdir, 'AG_TAG_mutations.svg')
 	plt.savefig(AG_TAG_plot_file)
 	
-	## plot the Categories
+	## plot the Categories - counts of MUTATIONS
 	plt.clf()
 	aglist_grouped = mut_annot_all.groupby(
 		by=['Experiment', 'Category1'],
 		as_index=False
 		).sum()
 	aglist_grouped_wide = aglist_grouped.pivot(index='Experiment', columns='Category1', values='AG')
-	ax = aglist_grouped_wide.plot(kind="bar", stacked=True)
-	ax.set_ylabel('Count')
+	ax = aglist_grouped_wide.plot(kind="bar", stacked=True, colormap=mycolors)
+	ax.set_ylabel('Number of Mutations')
 	plt.tight_layout()
-	AG_CAT_plot_file = os.path.join(outdir, 'AG_CATEGORY.svg')
+	AG_CAT_plot_file = os.path.join(outdir, 'AG_CATEGORY_mutations.svg')
+	plt.savefig(AG_CAT_plot_file)
+	
+	
+	aglist = mut_annot_all.drop_duplicates(['Experiment', 'LocusTag', 'Category1', 'Tag1'])
+	# remove non-locus tags (intergenics) 
+	aglist_genic = aglist.dropna(subset=['LocusTag'])
+	## plot the Tags  - counts are GENES
+	plt.clf()
+	aglist_grouped = aglist_genic.groupby(
+		by=['Experiment', 'Tag1'],
+		as_index=False
+		).sum()
+	aglist_grouped_wide = aglist_grouped.pivot(index='Experiment', columns='Tag1', values='AG')
+	ax = aglist_grouped_wide.plot(kind="bar", stacked=True, colormap=mycolors)
+	ax.set_ylabel('Number of Genes')
+	plt.tight_layout()
+	AG_TAG_plot_file = os.path.join(outdir, 'AG_TAG_genes.svg')
+	plt.savefig(AG_TAG_plot_file)
+	
+	## plot the Categories - counts of GENES
+	plt.clf()
+	aglist_grouped = aglist_genic.groupby(
+		by=['Experiment', 'Category1'],
+		as_index=False
+		).sum()
+	aglist_grouped_wide = aglist_grouped.pivot(index='Experiment', columns='Category1', values='AG')
+	ax = aglist_grouped_wide.plot(kind="bar", stacked=True, colormap=mycolors)
+	ax.set_ylabel('Number of Genes')
+	plt.tight_layout()
+	AG_CAT_plot_file = os.path.join(outdir, 'AG_CATEGORY_genes.svg')
 	plt.savefig(AG_CAT_plot_file)
 
 	
