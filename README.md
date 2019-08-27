@@ -48,15 +48,19 @@ For this step, you need to define a number of things:
 * a genome file (.gbk) - genomes we have used for TIGR4, 19F and D39 are under the ```gbk``` directory    
 * output file name (.csv) for filtered results    
 * lower cutoff (```L```) - mutations with frequency >```L``` in the CONTROL experiments will be removed    
-* upper cutoff (```U```) - mutations with frequency <```U``` in the EXPERIMENTAL conditions will be removed    
+* upper cutoff (```U```) - mutations with frequency <```U``` in the EXPERIMENTAL conditions will be removed 
+* optional: if the samples in the Comparison Sheet are **clonal** use the ```-C``` flag to run in clonal mode
 The comparison sheet needs to be comma-separated, with 2 columns titled ```File``` and ```Group```. The ```File``` column lists the filename and location of the gd files, and the ```Group``` column has values ```E``` or ```C``` depending on whether that gd file is experiment or control.      
     
 Example comparison sheets are in the directory ```ComparisonSheets```     
-Example use of the ```filter_gd.py``` script:    
+Example use of the ```filter_gd.py``` script in population mode:    
 
 ```python filter_gd.py -i ./ -s ComparisonSheets/T4_VNC.csv -g gbk/NC_003028.gbk -o filtered/T4_VNC_10_50.csv -l 10 -u 50```    
 
 This will generate a file ```filtered/T4_VNC_10_50.csv``` that has aggregated the population frequencies of each mutation (rows) in each of the experimental or control conditions (columns). The last column contains the locus tag, if the mutation coordinate is contained within a coding sequence.    
+    
+Example use in clonal mode:    
+```python filter_gd_test.py -i ./ -s ComparisonSheets/Suyen_RIF3_clone.csv -g gbk/NC_003028.gbk -o filtered/Suyen_RIF3_clone.csv -l 10 -u 50 -C```    
 **NOTE**: if you want to aggregate all results from a set of experiments WITHOUT filtering out any mutations, set L=100 and U=0 (this might take longer)    
 
 As an example, I did the filtering for the 6 ABX experiments in T4    
