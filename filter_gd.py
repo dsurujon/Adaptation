@@ -29,8 +29,8 @@ from optparse import OptionParser
 # Use example:
 # python filter_gd.py -i testdir -s Filter_Kan.csv -g NC_012469.gbk -o testout_10_50.csv -l 10 -u 50
 
-options = OptionParser(usage='%prog -i inputdir -s exptsheet -g genome -o output -l lowercutoff -u uppercutoff',
-                       description="Specify input directory, experiment sheet, reference genome file and output file, and cutoffs for frequency filtering")
+options = OptionParser(usage='%prog -i inputdir -s exptsheet -g genome -o output -l lowercutoff -u uppercutoff [-C]',
+                       description="Specify input directory, experiment sheet, reference genome file and output file, and cutoffs for frequency filtering. Optional: if you want to run this for clonal samples, add '-C' to the command")
 
 options.add_option("-i","--inputdir",dest="inputdir",
                    help="input directory containing gd files")
@@ -44,11 +44,13 @@ options.add_option("-u","--ucut",dest="uppercutoff",
                    help="higher cutoff for mutation frequency between [0,100]")
 options.add_option("-o","--outfile",dest="outputfile",
                    help="output file (.csv)")
+options.add_option("-C", action="store_true", dest="clonal")
+
 
 
 #read gd file, return a list of lines that have specific types of
 #mutations (eg. "SNP")  
-def reformat_gd(filename, reference):
+def reformat_gd(filename, reference, isclonal):
     f = open(filename)
     lines = [l.split() for l in f.readlines()]
     f.close()
@@ -61,22 +63,35 @@ def reformat_gd(filename, reference):
     fromnt=[]
     tont=[]
     frequency=[]
-    for line in lines:
-        mut_type = line[0]
-        if mut_type in relevantmutations:
-            try:
-            ## if mut_type is INS, need to get line[6]
-                if mut_type=="INS":
-                    frequency.append(float(line[6].split('=')[1])*100)
-                else:
-                    frequency.append(float(line[-1].split('=')[1])*100)
-            except ValueError:
-                frequency.append(0)
-            p=int(line[4])
-            type.append(mut_type)
-            pos.append(p)
-            fromnt.append(reference.seq[p-1])
-            tont.append(line[5])
+	# for population (i.e. nonclonal samples) use the frequency listed on the gd file
+    if isclonal==False:
+        for line in lines:
+            mut_type = line[0]
+            if mut_type in relevantmutations:
+                try:
+                ## if mut_type is INS, need to get line[6]
+                    if mut_type=="INS":
+                        frequency.append(float(line[6].split('=')[1])*100)
+                    else:
+                        frequency.append(float(line[-1].split('=')[1])*100)
+                except ValueError:
+                    frequency.append(0)
+                p=int(line[4])
+                type.append(mut_type)
+                pos.append(p)
+                fromnt.append(reference.seq[p-1])
+                tont.append(line[5])
+    # for clonal samples, add a frequency of 1 for each mutation
+    else:
+        for line in lines:
+            mut_type = line[0]
+            if mut_type in relevantmutations:
+                frequency.append(100)
+                p=int(line[4])
+                type.append(mut_type)
+                pos.append(p)
+                fromnt.append(reference.seq[p-1])
+                tont.append(line[5])
     d = {'Position': pd.Series(pos),
          'From': pd.Series(fromnt),
          'To': pd.Series(tont),
@@ -87,13 +102,13 @@ def reformat_gd(filename, reference):
     return(df)
 
 #merge dataframes from all population files
-def make_merged_FT(filenames,reference):
-    dfmerge=reformat_gd(filenames[0],reference)
+def make_merged_FT(filenames,reference, isclonal):
+    dfmerge=reformat_gd(filenames[0],reference,isclonal)
     numfiles=len(filenames)
     for i in range(1,numfiles):
         print('reading ', filenames[i])
         suf="."+str(i+1)
-        dfmerge=dfmerge.merge(reformat_gd(filenames[i],reference),how="outer", on=["Position","From","To","Type"], suffixes=["",suf])
+        dfmerge=dfmerge.merge(reformat_gd(filenames[i],reference,isclonal),how="outer", on=["Position","From","To","Type"], suffixes=["",suf])
     return(dfmerge)
 
 
@@ -147,6 +162,9 @@ def main():
     outfile = opts.outputfile
     cut_low = int(opts.lowercutoff)
     cut_high = int(opts.uppercutoff)
+    isclonal = opts.clonal
+    if isclonal==None:
+        isclonal=False
     
     # go to specified directory
     os.chdir(inputdir)
@@ -156,12 +174,18 @@ def main():
     expts, ctrls = read_expt_sheet(inputfile)
     
     # Control data frame for mutation frequencies
-    ctrlDF=make_merged_FT(ctrls,strain).drop_duplicates()
-    ctrlDF.rename(columns=lambda x: x.replace('Frequency', 'CTRL'), inplace=True)
-    # Experiment data frame for mutation frequencies
-    exptDF=make_merged_FT(expts,strain).drop_duplicates()
-    exptDF.rename(columns=lambda x: x.replace('Frequency', 'EXPT'), inplace=True)
-    print('Done reading gd files')
+    try:
+        ctrlDF=make_merged_FT(ctrls,strain, isclonal).drop_duplicates()
+        ctrlDF.rename(columns=lambda x: x.replace('Frequency', 'CTRL'), inplace=True)
+        # Experiment data frame for mutation frequencies
+        exptDF=make_merged_FT(expts,strain,isclonal).drop_duplicates()
+        exptDF.rename(columns=lambda x: x.replace('Frequency', 'EXPT'), inplace=True)
+        print('Done reading gd files')
+    except IndexError:
+        if isclonal==False:
+            print('Running in population mode. Check if your samples are clonal. If so, please re-run the script with the additional tag -C')
+            print('Quitting...')
+            quit()
 
     ## generate a feature dictionary for the reference genome
     feature_list=[]
