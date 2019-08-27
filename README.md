@@ -88,7 +88,9 @@ This will generate a directory "T4_ABX" under "Results", and save a number of fi
 * ```Mutation_summary.csv```: This is a summary of the number of mutations and the types of mutations (INS/DEL/SNP/SUB; Coding/Noncoding), Total number of mutations, and the total number of unique locus tags with mutations (which is the number of adapted genes)
 * ```Mutation_type.svg```: Bar plot of numbers of mutations of each type (SNP/INS/DEL/SUB) in each experimet    
 * ```Mutation_coding.svg```: Bar plot of numbers of mutations in Coding vs Noncoding sequences in each experiment    
-* ```Mutation_annotation_all.csv```: each adapted gene from each experiment is aggregated, and merged with its annotation    
-* ```AG_TAG.svg```: Bar plot of the Functional Tags of adapted genes in each experiment    
-* ```AG_CATEGORY.svg```: Bar plot of the Functional Categories of adapted genes in each experiment    
+* ```Mutation_annotation_all.csv```: each adapted gene from each experiment is aggregated, and merged with its annotation  
+* ```AG_TAG_mutations.svg```: Bar plot of the Functional Tags of adaptive mutations in each experiment    
+* ```AG_CATEGORY_mutations.svg```: Bar plot of the Functional Categories of adaptive mutations in each experiment  
+* ```AG_TAG_genes.svg```: Bar plot of the Functional Tags of adapted genes in each experiment    
+* ```AG_CATEGORY_genes.svg```: Bar plot of the Functional Categories of adapted genes in each experiment    
 
