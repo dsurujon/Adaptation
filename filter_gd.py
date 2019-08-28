@@ -25,12 +25,13 @@ from Bio import SeqIO
 import numpy as np
 import pandas as pd
 from optparse import OptionParser
+import re
 
 # Use example:
 # python filter_gd.py -i testdir -s Filter_Kan.csv -g NC_012469.gbk -o testout_10_50.csv -l 10 -u 50
 
-options = OptionParser(usage='%prog -i inputdir -s exptsheet -g genome -o output -l lowercutoff -u uppercutoff [-C]',
-                       description="Specify input directory, experiment sheet, reference genome file and output file, and cutoffs for frequency filtering. Optional: if you want to run this for clonal samples, add '-C' to the command")
+options = OptionParser(usage='%prog -i inputdir -s exptsheet -g genome -o output -l lowercutoff -u uppercutoff [-C] [-M]',
+                       description="Specify input directory, experiment sheet, reference genome file and output file, and cutoffs for frequency filtering. Optional: if you want to run this for clonal samples, add '-C' to the command. If you want to generate a table to use with the Muller_diagram package, add the -M option.")
 
 options.add_option("-i","--inputdir",dest="inputdir",
                    help="input directory containing gd files")
@@ -45,12 +46,14 @@ options.add_option("-u","--ucut",dest="uppercutoff",
 options.add_option("-o","--outfile",dest="outputfile",
                    help="output file (.csv)")
 options.add_option("-C", action="store_true", dest="clonal")
+options.add_option("-M", action="store_true", dest="makemullertable")
 
 
 
 #read gd file, return a list of lines that have specific types of
 #mutations (eg. "SNP")  
 def reformat_gd(filename, reference, isclonal):
+    filebasename = os.path.splitext(os.path.basename(filename))[0]
     f = open(filename)
     lines = [l.split() for l in f.readlines()]
     f.close()
@@ -99,16 +102,18 @@ def reformat_gd(filename, reference, isclonal):
          'Frequency': pd.Series(frequency)}
     df = pd.DataFrame(d)
     df=df[['From','Position','To','Type','Frequency']]
+    df.rename(columns={'Frequency':'Frequency.'+filebasename}, inplace=True)
     return(df)
 
 #merge dataframes from all population files
 def make_merged_FT(filenames,reference, isclonal):
+    print('reading', filenames[0])
     dfmerge=reformat_gd(filenames[0],reference,isclonal)
     numfiles=len(filenames)
     for i in range(1,numfiles):
         print('reading ', filenames[i])
-        suf="."+str(i+1)
-        dfmerge=dfmerge.merge(reformat_gd(filenames[i],reference,isclonal),how="outer", on=["Position","From","To","Type"], suffixes=["",suf])
+        
+        dfmerge=dfmerge.merge(reformat_gd(filenames[i],reference,isclonal),how="outer", on=["Position","From","To","Type"])
     return(dfmerge)
 
 
@@ -144,6 +149,7 @@ def make_ctrl_comparison(mydf,cdmdf,fc_low,fc_high,fl,filename):
     df_multi=get_locus_tags(df_sub,fl)
     print(len(df_sub),len(set(df_multi['LocusTag'])))
     df_multi.to_csv(filename)
+    return(df_multi)
     
 
 
@@ -163,8 +169,11 @@ def main():
     cut_low = int(opts.lowercutoff)
     cut_high = int(opts.uppercutoff)
     isclonal = opts.clonal
+    makemullertable = opts.makemullertable
     if isclonal==None:
         isclonal=False
+    if makemullertable==None:
+        makemullertable=False
     
     # go to specified directory
     os.chdir(inputdir)
@@ -198,7 +207,21 @@ def main():
     print('Done making feature lists')
 
     print("High cutoff: %s, Low cutoff:%s\n" %(cut_low, cut_high))
-    make_ctrl_comparison(exptDF,ctrlDF,cut_low,cut_high,feature_list,outfile)
+    filtered_df = make_ctrl_comparison(exptDF,ctrlDF,cut_low,cut_high,feature_list,outfile)
+    
+    if makemullertable:
+        filtered_df['Population']='X'
+        filtered_df['Chromosome']=1
+        filtered_df['Trajectory']=[i for i in range(filtered_df.shape[0])]
+        filtered_df.rename(columns={'Type':'Class'}, inplace=True)
+        filtered_df['Mutation'] = filtered_df['From']+'>'+filtered_df['To']
+        exptcolnames = ['EXPT.'+os.path.splitext(os.path.basename(filename))[0] for filename in expts]
+        relevantcols = ['Population', 'Trajectory', 'Chromosome', 'Position', 'Class', 'Mutation']+exptcolnames
+        muller_df = filtered_df[relevantcols]
+        exptrename = {exptcol:re.search(r'\d+', exptcol).group() for exptcol in exptcolnames}
+        muller_df.rename(columns = exptrename, inplace=True)
+        muller_filename = os.path.splitext(outfile)[0]+'_Muller.csv'
+        muller_df.to_csv(muller_filename, index=False)
 
 if __name__ == '__main__':
     main()
