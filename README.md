@@ -72,6 +72,13 @@ python filter_gd.py -i ./ -s ComparisonSheets/T4_LVX.csv -g gbk/NC_003028.gbk -o
 python filter_gd.py -i ./ -s ComparisonSheets/T4_PEN.csv -g gbk/NC_003028.gbk -o filtered/T4_PEN_10_50.csv -l 10 -u 50    
 python filter_gd.py -i ./ -s ComparisonSheets/T4_RIF.csv -g gbk/NC_003028.gbk -o filtered/T4_RIF_10_50.csv -l 10 -u 50    
 ```
+    
+#### Generating input table for muller plots    
+If you wish to use the [muller](https://github.com/cdeitrick/muller_diagrams/) package for downstream analysis of your populations, you can generate a "muller-formatted" filtered table. This will have all necessary columns for the muller package to process the experiment.    
+Note: When setting up your comparison sheet, the Experimental samples should be the different timepoints of **the same population**. And the timepoints can be named in any way, as long as there is a **single** integer in the sample name (e.g. "Bio_day_12" or "LVX36" etc). The columns corresponding to each timepoint will be renamed with the integer contained in the sample name. You can use the ```filter_gd.py``` script in "muller" mode by adding the optional argument ```-M```. This will generate a second ```.csv``` file that is marked ```[outputfilename]_Muller.csv```, which is appropriately formatted for downstream use with the muller package.     
+Example usage:     
+```python filter_gd.py -i ./ -s ComparisonSheets/Biofilm_LVX_forMuller.csv -g gbk/NC_003028.gbk -o filtered/Biofilm_LVX_forMuller_10_30_test.csv -l 10 -u 30 -M```    
+
 
 ## STEP 3: Agregate results from multiple experiments, generate plots. 
 
